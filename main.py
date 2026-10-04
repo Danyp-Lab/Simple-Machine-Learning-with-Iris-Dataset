@@ -1,22 +1,31 @@
-# import necessary libraries
+"""
+Simple Machine Learning with Iris Dataset
+Modernized for PEP standards with type annotations and clean entry point.
+"""
+
 from sklearn.datasets import load_iris
 from sklearn.model_selection import train_test_split
 from sklearn.neighbors import KNeighborsClassifier
 
-# load the iris dataset
-iris = load_iris()
 
-# split the data into training and testing sets
-X_train, X_test, y_train, y_test = train_test_split(iris.data, iris.target, test_size=0.3, random_state=42)
+def train_and_evaluate(test_size: float = 0.3, random_state: int = 42, n_neighbors: int = 3) -> float:
+    """Load Iris dataset, fit a KNN classifier, and return accuracy score."""
+    iris = load_iris()
+    x_train, x_test, y_train, y_test = train_test_split(
+        iris.data, iris.target, test_size=test_size, random_state=random_state
+    )
 
-# create a k-NN classifier with k=3
-knn = KNeighborsClassifier(n_neighbors=3)
+    knn = KNeighborsClassifier(n_neighbors=n_neighbors)
+    knn.fit(x_train, y_train)
 
-# fit the classifier to the training data
-knn.fit(X_train, y_train)
+    accuracy: float = float(knn.score(x_test, y_test))
+    return accuracy
 
-# make predictions on the testing data
-y_pred = knn.predict(X_test)
 
-# print the accuracy score
-print("Accuracy:", knn.score(X_test, y_test))
+def main() -> None:
+    accuracy = train_and_evaluate()
+    print(f"✅ Model trained successfully. Test Accuracy: {accuracy:.2%}")
+
+
+if __name__ == "__main__":
+    main()
