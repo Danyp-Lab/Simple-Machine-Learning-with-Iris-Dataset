@@ -8,7 +8,9 @@ from sklearn.model_selection import train_test_split
 from sklearn.neighbors import KNeighborsClassifier
 
 
-def train_and_evaluate(test_size: float = 0.3, random_state: int = 42, n_neighbors: int = 3) -> float:
+def train_and_evaluate(
+    test_size: float = 0.3, random_state: int = 42, n_neighbors: int = 3
+) -> float:
     """Load Iris dataset, fit a KNN classifier, and return accuracy score."""
     iris = load_iris()
     x_train, x_test, y_train, y_test = train_test_split(
